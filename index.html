@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Dashboard</title>
+</head>
+<body>
+    <h1>Real-time Dashboard</h1>
+    <ul id="dashboardList"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // รับข้อมูลจาก server
+        socket.on('dashboardData', (data) => {
+            updateDashboard(data);
+        });
+
+        function updateDashboard(data) {
+            const dashboardList = document.getElementById('dashboardList');
+            dashboardList.innerHTML = '';
+
+            data.forEach((item) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `ID: ${item.id}, Name: ${item.fName}, Value: ${item.lName}`;
+                dashboardList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
